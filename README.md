@@ -4,7 +4,6 @@ Singly Authentication for Zend Framework 2
 The Singly module provides authentication against any of singly.com's 
 providers.  
 
-
 Installation
 ------------
 #### Installation steps
