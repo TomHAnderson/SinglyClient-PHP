@@ -1,0 +1,32 @@
+<?php
+use Singly\Module;
+?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script>
+$(function() {
+    $('div.api-services img').click(function(event) {
+        window.location = "https://api.singly.com/oauth/authorize?" +
+            "client_id=<?= Module::getOption('client_id'); ?>&" +
+            "redirect_uri=<?= Module::getOption('redirect_uri'); ?>&" +
+            "service=" + $(this).attr('service');
+        return false;
+    });
+});
+</script>
+
+<h1>Select a provider to login</h1>
+
+<div class="api-services">
+  <img service="tumblr" src="https://singly.com/img/icons/32px/tumblr.png">
+  <img service="facebook" src="https://singly.com/img/icons/32px/facebook.png">
+  <img service="foursquare" src="https://singly.com/img/icons/32px/foursquare.png">
+  <img service="github" src="https://singly.com/img/icons/32px/github.png">
+  <img service="instagram" src="https://singly.com/img/icons/32px/instagram.png">
+  <img service="twitter" src="https://singly.com/img/icons/32px/twitter.png">
+  <img service="gcontacts" src="https://singly.com/img/icons/32px/gcontacts.png">
+  <img service="linkedin" src="https://singly.com/img/icons/32px/linkedin.png">
+  <img service="email" src="https://singly.com/img/icons/32px/email.png">
+  <img service="fitbit" src="https://singly.com/img/icons/32px/fitbit.png">
+</div>
