@@ -1,0 +1,11 @@
+https://github.com/TomHAnderson/SinglyAuthentication{
+    "name": "TomHAnderson/SinglyAuthentication",
+    "description": "Authentication for singly.com",
+    "license": "MIT",
+    "keywords": [
+        "singly",
+        "zf2",
+        "authentication"
+    ],
+    "homepage": "https://github.com/TomHAnderson/SinglyAuthentication",
+}
