@@ -1,15 +1,33 @@
 Singly Authentication for Zend Framework 2 
 ==========================================
 
+The Singly module provides authentication against any of singly.com's 
+providers.  
+
+
 Installation
 ------------
-Download the module into the modules directory of your application.
-Include the module in your application.config.php 
+#### Installation steps
+  1. begin with a Zend Framework 2 skeleton application
+  2. edit the `composer.json` file with following contents:
 
+     ```json
+     "require": {
+         "TomHAnderson/Singly": "dev-master"
+     }
+     ```
+  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
+     http://getcomposer.org/installer and execute it with PHP)
+  4. run `php composer.phar install`
+  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules`
 
-You must copy module.singly.config.php.dist to your application's
-autoload directory, rename it, and edit it with your Singly
-account information.
+     ```php
+     'Singly',
+     ```
+  5. 5a. You may need to add TomHAnderson to your modules directories.
+
+  6. drop `vendor/TomHAnderson/Singly/config/module.singly.local.php.dist` into your application's
+     `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
 
 
 URLs
@@ -22,4 +40,3 @@ Show the authenticated user
 
 http://localhost/user/logout
 End the authentication session
-
