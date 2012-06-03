@@ -1,5 +1,5 @@
 {
-    "name": "TomHAnderson/SinglyAuthentication",
+    "name": "TomHAnderson/Singly",
     "description": "Authentication for singly.com",
     "license": "MIT",
     "keywords": [
@@ -7,5 +7,5 @@
         "zf2",
         "authentication"
     ],
-    "homepage": "https://github.com/TomHAnderson/SinglyAuthentication"
+    "homepage": "https://github.com/TomHAnderson/Singly"
 }
