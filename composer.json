@@ -1,11 +1,24 @@
 {
     "name": "TomHAnderson/Singly",
     "description": "Authentication for singly.com",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "singly",
         "zf2",
         "authentication"
     ],
-    "homepage": "https://github.com/TomHAnderson/Singly"
+    "homepage": "http://www.singly.com",
+    "authors": [
+        {
+            "name": "Tom Anderson",
+            "email": "tom.h.anderson@gmail.com",
+            "homepage": "http://db.etree.org/"
+        },
+    ],
+    "autoload": {
+        "psr-0": {
+            "Singly": "src/",
+        }
+    },
 }
