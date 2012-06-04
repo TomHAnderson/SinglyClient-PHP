@@ -12,9 +12,12 @@ use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     Zend\Http\Client,
     Zend\Json\Json,
-    Singly\Module;
+    Singly\Module,
+    Zend\Authentication\Exception\InvalidArgumentException;
 
 class Singly implements AdapterInterface {
+
+    private $code;
 
     public function setCode($code) {
         $this->code = $code;
@@ -27,7 +30,7 @@ class Singly implements AdapterInterface {
 
     public function authenticate() {
 
-        if (!$this->getCode()) throw new \Exception('Code has not been set');
+        if (!$this->getCode()) throw new InvalidArgumentException('Code has not been set');
 
         // Validate the access token
         $http = new Client();

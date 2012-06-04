@@ -60,16 +60,6 @@ return array(
                             ),
                         ),
                     ),
-                    'register' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/register',
-                            'defaults' => array(
-                                'controller' => 'singly',
-                                'action' => 'register',
-                            ),
-                        ),
-                    ),
                 ),
             ),
         ),
