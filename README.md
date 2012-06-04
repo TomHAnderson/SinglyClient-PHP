@@ -23,8 +23,6 @@ Installation
      ```php
      'Singly',
      ```
-  5. 5a. You may need to add TomHAnderson to your modules directories.
-
   6. drop `vendor/TomHAnderson/Singly/config/module.singly.local.php.dist` into your application's
      `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
 
