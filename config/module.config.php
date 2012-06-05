@@ -69,10 +69,10 @@ return array(
         'instance' => array(
 
             'alias' => array(
-                // Models
                 'modelSingly' => 'Singly\Model\Singly',
                 'authenticationService' => 'Zend\Authentication\AuthenticationService',
                 'singlyAdapter' => 'Singly\Authentication\Adapter\Singly',
+                'singlyService' => 'Singly\Service\Singly',
             ),
 
             'authenticationService' => array(
@@ -82,10 +82,20 @@ return array(
                 ),
             ),
 
+            'singlyAdapter' => array(
+                'parameters' => array(
+                    'service' => 'singlyService',
+                ),
+            ),
+
             'Singly\View\Helper\Singly' => array(
                 'parameters' => array(
                     'authService' => 'authenticationService',
                 ),
+            ),
+
+            'singlyService' => array(
+                'parameters' => array()
             ),
 
         ),

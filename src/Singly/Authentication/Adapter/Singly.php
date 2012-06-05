@@ -17,30 +17,27 @@ use Zend\Authentication\Adapter\AdapterInterface,
 
 class Singly implements AdapterInterface {
 
-    private $code;
+    private $serviceManager;
+    private $service;
 
-    public function setCode($code) {
-        $this->code = $code;
+    public function setService($service) {
+        $this->service = $service;
         return $this;
     }
 
-    public function getCode() {
-        return $this->code;
+    public function getService() {
+        return $this->service;
     }
 
     public function authenticate() {
 
-        if (!$this->getCode()) throw new InvalidArgumentException('Code has not been set');
-
-        // Validate the access token
+        // Fetch the user's profile
         $http = new Client();
-        $http->setUri('https://api.singly.com/oauth/access_token');
-        $http->setMethod('POST');
+        $http->setUri('https://api.singly.com/profiles');
+        $http->setMethod('GET');
 
-        $http->setParameterPost(array(
-            'client_id' => Module::getOption('client_id'),
-            'client_secret' => Module::getOption('client_secret'),
-            'code' => $this->getCode(),
+        $http->setParameterGet(array(
+            'access_token' => $this->getService()->getAccessToken()
         ));
 
         $response = $http->send();
@@ -49,19 +46,6 @@ class Singly implements AdapterInterface {
             return new Result(Result::FAILURE_CREDENTIAL_INVALID, null, array());
         }
 
-        $json = Json::decode($response->getBody());
-        $token = $json->access_token;
-
-        // Fetch the user's profile
-        $http = new Client();
-        $http->setUri('https://api.singly.com/profiles');
-        $http->setMethod('GET');
-
-        $http->setParameterGet(array(
-            'access_token' => $token
-        ));
-
-        $response = $http->send();
         $content = $response->getBody();
         $decoded = Json::decode($content);
 

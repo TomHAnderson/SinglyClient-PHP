@@ -28,9 +28,11 @@ class SinglyControllerAbstract extends ActionController
     public function takeloginAction()
     {
         $code = $this->getRequest()->query()->get('code');
+        $singly= $this->getServiceLocator()->get('singlyService');
+        // Sending code to getAccessToken authenticates the code
+        $singly->getAccessToken($code);
 
         $auth = $this->getServiceLocator()->get('authenticationService');
-        $auth->getAdapter()->setCode($code);
         $result = $auth->authenticate();
 
         if (!$result->isValid()) throw new \Exception('Invalid auth token returned');
@@ -45,6 +47,8 @@ class SinglyControllerAbstract extends ActionController
         if (!$auth->hasIdentity()) {
             return $this->plugin('redirect')->toUrl('/user/login');
         }
+
+        $singly= $this->getServiceLocator()->get('singlyService');
 
         return array();
     }
