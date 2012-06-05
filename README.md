@@ -1,8 +1,10 @@
-Singly Authentication for Zend Framework 2 
+Singly API for Zend Framework 2 
 ==========================================
 
 The Singly module provides authentication against any of singly.com's 
-providers.  
+providers and API access through a service object.
+
+Singly documentation may be found at http://dev.singly.com
 
 Installation
 ------------
