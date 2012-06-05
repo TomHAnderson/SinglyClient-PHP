@@ -41,7 +41,7 @@ http://localhost/user/logout
     
 Usage
 --------
-Once a user is authenticated with /user/lgoin you may use the Singly service object to interact with the API
+Once a user is authenticated with /user/login you may use the Singly service object to interact with the API
 
 
 ```php
