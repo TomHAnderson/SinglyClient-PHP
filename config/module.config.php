@@ -67,19 +67,14 @@ return array(
 
     'di' => array(
         'instance' => array(
-
             'alias' => array(
-                'modelSingly' => 'Singly\Model\Singly',
-                'authenticationService' => 'Zend\Authentication\AuthenticationService',
-                'singlyAdapter' => 'Singly\Authentication\Adapter\Singly',
                 'singlyService' => 'Singly\Service\Singly',
+                'singlyAdapter' => 'Singly\Authentication\Adapter\Singly',
+                'authenticationService' => 'Zend\Authentication\AuthenticationService',
             ),
 
-            'authenticationService' => array(
-                'parameters' => array(
-                    'storage' => null,
-                    'adapter' => 'singlyAdapter',
-                ),
+            'singlyService' => array(
+                'parameters' => array()
             ),
 
             'singlyAdapter' => array(
@@ -94,10 +89,12 @@ return array(
                 ),
             ),
 
-            'singlyService' => array(
-                'parameters' => array()
+            'authenticationService' => array(
+                'parameters' => array(
+                    'storage' => null,
+                    'adapter' => 'singlyAdapter',
+                ),
             ),
-
         ),
     ),
 );
