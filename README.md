@@ -26,14 +26,29 @@ Installation
   6. drop `vendor/TomHAnderson/Singly/config/module.singly.local.php.dist` into your application's
      `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
 
-
-URLs
------
+Authentication
+--------------
 http://localhost/user/login
-Show the available services from Singly to login
+    Show the available services from Singly to login
 
 http://localhost/user 
-Show the authenticated user
+    Show the authenticated user
 
 http://localhost/user/logout
-End the authentication session
+    End the authentication session
+    
+Usage
+--------
+Once a user is authenticated with /user/lgoin you may use the Singly service object to interact with the API
+
+
+```php
+// Create service
+$singly = $this->getServiceLocator()->get('singlyService');
+
+// API: Services
+$singly->getServices($service = null, $endpoint = null)
+
+// API: Types
+$singly->getTypes($type = null, $parameters = null)
+```
