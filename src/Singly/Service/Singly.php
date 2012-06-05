@@ -20,7 +20,6 @@ class Singly {
     }
 
     public function getAccessToken($code = null) {
-
         $session = new SessionContainer('Singly');
         if (isset($session->access_token)) {
             return $session->access_token;
@@ -32,7 +31,6 @@ class Singly {
         if (!$code AND $this->accessToken)
             return $this->accessToken;
 
-        // Validate the access token
         $http = new Client();
         $http->setUri('https://api.singly.com/oauth/access_token');
         $http->setMethod('POST');
@@ -61,7 +59,6 @@ class Singly {
         if (!$this->getAccessToken())
             throw new InvalidArgumentException('Access token has not been set');
 
-        // Fetch the user's profile
         $http = new Client();
         $uri = 'https://api.singly.com/v0/services';
         $uri .= ($service) ? '/' . $service: '';
@@ -83,10 +80,130 @@ class Singly {
         if (!$this->getAccessToken())
             throw new InvalidArgumentException('Access token has not been set');
 
-        // Fetch the user's profile
         $http = new Client();
         $uri = 'https://api.singly.com/v0/types';
         $uri .= ($type) ? '/' . $type: '';
+        $http->setUri($uri);
+        $http->setMethod('GET');
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        foreach ((array)$parameters as $key => $val) {
+            $http->setParameterGet(array(
+                $key => $val
+            ));
+        }
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
+    public function getProxy($service, $path, $parameters = null)
+    {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/proxy';
+        $uri .= "/$service/$path";
+        $http->setUri($uri);
+        $http->setMethod('GET');
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        foreach ((array)$parameters as $key => $val) {
+            $http->setParameterGet(array(
+                $key => $val
+            ));
+        }
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
+    public function getProfiles($service = null, $parameters = null) {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/v0/profiles';
+        $uri .= ($service) ? '/' . $service: '';
+        $http->setUri($uri);
+        $http->setMethod('GET');
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        foreach ((array)$parameters as $key => $val) {
+            $http->setParameterGet(array(
+                $key => $val
+            ));
+        }
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
+    public function getById($id) {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/id';
+        $uri .= ($id) ? '/' . $id: '';
+        $http->setUri($uri);
+        $http->setMethod('GET');
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
+    public function getByContact($service, $id, $parameters = null) {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/v0/profiles';
+        $uri .= ($service) ? '/' . $service: '';
+        $uri .= ($id) ? '/' . $id: '';
+        $http->setUri($uri);
+        $http->setMethod('GET');
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        foreach ((array)$parameters as $key => $val) {
+            $http->setParameterGet(array(
+                $key => $val
+            ));
+        }
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
+    public function getByUrl($url, $parameters = null) {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/v0/profiles';
+        $uri .= ($url) ? '/' . $url: '';
         $http->setUri($uri);
         $http->setMethod('GET');
 
