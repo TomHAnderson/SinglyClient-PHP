@@ -43,14 +43,30 @@ Usage
 --------
 Once a user is authenticated with /user/login you may use the Singly service object to interact with the API
 
-
 ```php
 // Create service
 $singly = $this->getServiceLocator()->get('singlyService');
+```
+API Services through Singly
+```php
+// Profiles
+$singly->getProfiles($service = null, $parameters = null);
 
-// API: Services
-$singly->getServices($service = null, $endpoint = null)
+// Services
+$singly->getServices($service = null, $endpoint = null);
 
-// API: Types
-$singly->getTypes($type = null, $parameters = null)
+// Types
+$singly->getTypes($type = null, $parameters = null);
+
+// Global Items
+$singly->getById($id);
+
+// Proxy to Service API
+$singly->getProxy($service, $path, $parameters = null)
+
+// By URL
+$singly->getByUrl($url, $parameters = null);
+
+// By Contact ID
+$singly->getByContact($service, $id, $parameters = null);
 ```
