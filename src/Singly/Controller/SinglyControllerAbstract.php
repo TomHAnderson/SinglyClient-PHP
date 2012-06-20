@@ -48,10 +48,7 @@ class SinglyControllerAbstract extends ActionController
             return $this->plugin('redirect')->toUrl('/user/login');
         }
 
-        $singly = $this->getServiceLocator()->get('singlyService');
-
         return array(
-            'singly' => $singly,
         );
     }
 

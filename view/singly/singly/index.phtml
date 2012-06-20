@@ -71,24 +71,24 @@ $(function() {
 
 <?php
 
-$profiles = $singly->getProfiles();
+$profiles = $this->singly()->getProfiles();
 
 ?>
 
 <div class="api-services">
-    <img alt="Tumblr" service="tumblr" auth="<?= (isset($profiles->tumblr)) ? 'true': 'false'; ?>" src="/assets/Singly/images/tumblr.png">
-    <img alt="Facebook" service="facebook" auth="<?= (isset($profiles->facebook)) ? 'true': 'false'; ?>" src="/assets/Singly/images/facebook.png">
-    <img alt="Foursquare" service="foursquare" auth="<?= (isset($profiles->foursquare)) ? 'true': 'false'; ?>" src="/assets/Singly/images/foursquare.png">
-    <img alt="Github" service="github" auth="<?= (isset($profiles->github)) ? 'true': 'false'; ?>" src="/assets/Singly/images/github.png">
-    <img alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
-    <img alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
-    <img alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
-    <img alt="LinkedIN" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
-    <img alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
-    <img alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
+    <img title="Tumblr" alt="Tumblr" service="tumblr" auth="<?= (isset($profiles->tumblr)) ? 'true': 'false'; ?>" src="/assets/Singly/images/tumblr.png">
+    <img title="Facebook" alt="Facebook" service="facebook" auth="<?= (isset($profiles->facebook)) ? 'true': 'false'; ?>" src="/assets/Singly/images/facebook.png">
+    <img title="Foursquare" alt="Foursquare" service="foursquare" auth="<?= (isset($profiles->foursquare)) ? 'true': 'false'; ?>" src="/assets/Singly/images/foursquare.png">
+    <img title="Github" alt="Github" service="github" auth="<?= (isset($profiles->github)) ? 'true': 'false'; ?>" src="/assets/Singly/images/github.png">
+    <img title="Instagram" alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
+    <img title="Twitter" alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
+    <img title="Google" alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
+    <img title="LinkedIN" alt="LinkedIN" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
+    <img title="Email" alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
+    <img title="Fitbit" alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
 </div>
 
-Your userid is <?php echo $this->singly(); ?>
+Your userid is ???
 <br>
 <br>
 <a href="/user/logout">Logout</a>
