@@ -61,12 +61,12 @@ $(function() {
 
     $('div.api-services img').hover(function(event) {
         $(this).addClass('hover');
-        $(this).parent().find('img:first').stop().animate({opacity:1}, 250);
+        $(this).parent().find('img:first').stop().animate({opacity:1}, 0);
 
     },
     function(event) {
         $(this).removeClass('hover');
-        $(this).stop().animate({opacity:0}, 250);
+        $(this).stop().animate({opacity:0}, 0);
     });
 });
 </script>
@@ -85,7 +85,7 @@ Select a provider to login
     <img title="Instagram" alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
     <img title="Twitter" alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
     <img title="Google" alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
-    <img title="LinkedIN" alt="LinkedIN" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
+    <img title="LinkedIN" alt="Linkedin" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
     <img title="Email" alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
     <img title="Fitbit" alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
 </div>
