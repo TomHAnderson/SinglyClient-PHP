@@ -19,10 +19,6 @@ class Singly extends AbstractHelper
      */
     protected $singlyService;
 
-    public function __construct(SinglyService $singlyService) {
-        $this->setSinglyService($singlyService);
-    }
-
     /**
      * __invoke
      *
@@ -31,8 +27,8 @@ class Singly extends AbstractHelper
     */
     public function __invoke()
     {
-        if ($this->getSinglyService()) {
-            return $this->getSinglyService();
+        if ($this->getService()) {
+            return $this->getService();
         }
 
         throw new \Exception('Singly service has not been set on view helper');
@@ -43,7 +39,7 @@ class Singly extends AbstractHelper
      *
      * @return AuthenticationService
      */
-    public function getSinglyService()
+    public function getService()
     {
         return $this->singlyService;
     }
@@ -53,7 +49,7 @@ class Singly extends AbstractHelper
      *
      * @param AuthenticationService $authService
      */
-    public function setSinglyService(SinglyService $service)
+    public function setService(SinglyService $service)
     {
         $this->singlyService = $service;
         return $this;

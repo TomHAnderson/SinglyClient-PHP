@@ -85,7 +85,7 @@ return array(
 
             'Singly\View\Helper\Singly' => array(
                 'parameters' => array(
-                    'singlyService' => 'singlyService',
+                    'service' => 'singlyService',
                 ),
             ),
 
