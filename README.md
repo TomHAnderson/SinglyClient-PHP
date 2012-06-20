@@ -77,4 +77,4 @@ A view helper object is also provided which returns the Singly service object
 ```php
 // Within a view
 $singly = $this->singly();
-```k
+```
