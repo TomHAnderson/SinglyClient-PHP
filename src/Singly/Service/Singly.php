@@ -8,10 +8,35 @@ use Singly\Service\Exception\InvalidArgumentException,
     Zend\Http\Client,
     Zend\Json\Json,
     Singly\Module,
-    Zend\Session\Container as SessionContainer;
+    Zend\Session\Container as SessionContainer,
+    Zend\ServiceManager\ServiceManager;
 
 class Singly {
     private $accessToken;
+    private $serviceManager;
+
+    public function __construct($serviceManager) {
+        $this->setServiceManager($serviceManager);
+    }
+
+    public function setServiceManager(ServiceManager $manager) {
+        $this->serviceManager = $manager;
+        return $this;
+    }
+
+    public function getServiceManager() {
+        return $this->serviceManager;
+    }
+
+    public function getIdentity() {
+        $auth = $this->getServiceManager()->get('authenticationService');
+
+        if ($auth->hasIdentity()) {
+            return $auth->getIdentity();
+        } else {
+            return false;
+        }
+    }
 
     public function setAccessToken($accessToken)
     {

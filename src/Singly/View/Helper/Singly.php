@@ -9,14 +9,15 @@
 namespace Singly\View\Helper;
 
 use Zend\View\Helper\AbstractHelper,
-    Zend\Authentication\AuthenticationService;
+    Zend\Authentication\AuthenticationService,
+    Singly\Service\Singly as SinglyService;
 
 class Singly extends AbstractHelper
 {
     /**
      * @var AuthenticationService
      */
-    protected $authService;
+    protected $singlyService;
 
     /**
      * __invoke
@@ -26,11 +27,11 @@ class Singly extends AbstractHelper
     */
     public function __invoke()
     {
-        if ($this->getAuthService()->hasIdentity()) {
-            return $this->getAuthService()->getIdentity();
-        } else {
-            return false;
+        if ($this->getService()) {
+            return $this->getService();
         }
+
+        throw new \Exception('Singly service has not been set on view helper');
     }
 
     /**
@@ -38,9 +39,9 @@ class Singly extends AbstractHelper
      *
      * @return AuthenticationService
      */
-    public function getAuthService()
+    public function getService()
     {
-        return $this->authService;
+        return $this->singlyService;
     }
 
     /**
@@ -48,9 +49,9 @@ class Singly extends AbstractHelper
      *
      * @param AuthenticationService $authService
      */
-    public function setAuthService(AuthenticationService $authService)
+    public function setService(SinglyService $service)
     {
-        $this->authService = $authService;
+        $this->singlyService = $service;
         return $this;
     }
 }

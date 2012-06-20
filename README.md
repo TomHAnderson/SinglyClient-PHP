@@ -41,11 +41,14 @@ http://localhost/user/logout
     
 Usage
 --------
-Once a user is authenticated with /user/login you may use the Singly service object to interact with the API
+Once a user is authenticated at /user/login you may use the Singly service object to interact with the API
 
 ```php
-// Create service
+// Init service object
 $singly = $this->getServiceLocator()->get('singlyService');
+
+// Get auth identity 
+$id = $singly->getIdentity();
 ```
 API Services through Singly
 ```php
@@ -69,4 +72,9 @@ $singly->getByUrl($url, $parameters = null);
 
 // By Contact ID
 $singly->getByContact($service, $id, $parameters = null);
+```
+A view helper object is also provided which returns the Singly service object
+```php
+// Within a view
+$singly = $this->singly();
 ```

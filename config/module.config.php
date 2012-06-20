@@ -74,7 +74,9 @@ return array(
             ),
 
             'singlyService' => array(
-                'parameters' => array()
+                'parameters' => array(
+                    'serviceManager' => 'Zend\ServiceManager\ServiceManager',
+                )
             ),
 
             'singlyAdapter' => array(
@@ -85,7 +87,7 @@ return array(
 
             'Singly\View\Helper\Singly' => array(
                 'parameters' => array(
-                    'authService' => 'authenticationService',
+                    'service' => 'singlyService',
                 ),
             ),
 
