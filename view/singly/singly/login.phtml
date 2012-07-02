@@ -3,8 +3,25 @@ use Singly\Module;
 ?>
 
 <style>
-    .api-services img.hover {
+    ul.api-services li {
+        display: inline;
+        padding: 3px;
+    }
+
+    ul.api-services img {
+        padding: 1px;
+    }
+
+    ul.api-services img.hover {
         cursor: pointer;
+    }
+
+    ul.api-services img.loggedIn {
+        border-color: green;
+    }
+
+    ul.api-services img.loggedOut {
+        border-color: red;
     }
 </style>
 
@@ -12,46 +29,7 @@ use Singly\Module;
 
 <script>
 $(function() {
-    // Fade in images so there isn't a color "pop" document load and then on window load
-    $(".api-services img").fadeIn(500);
-
-    // clone image
-    $('.api-services img').each(function(){
-        var el = $(this);
-        el.css({"position":"absolute"}).wrap("<div class='img_wrapper' style='display: inline-block'>").clone().addClass('img_grayscale').css({"position":"absolute","z-index":"998","opacity":"0"}).insertBefore(el).queue(function(){
-            var el = $(this);
-            el.parent().css({"width":this.width,"height":this.height});
-            el.dequeue();
-        });
-        if ($(this).attr('auth') == 'false') this.src = grayscale(this.src);
-    });
-
-    // Grayscale w canvas method
-    function grayscale(src){
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        var imgObj = new Image();
-        imgObj.src = src;
-        canvas.width = imgObj.width;
-        canvas.height = imgObj.height;
-        ctx.drawImage(imgObj, 0, 0);
-        var imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for(var y = 0; y < imgPixels.height; y++){
-            for(var x = 0; x < imgPixels.width; x++){
-                var i = (y * 4) * imgPixels.width + x * 4;
-                var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-                imgPixels.data[i] = avg;
-                imgPixels.data[i + 1] = avg;
-                imgPixels.data[i + 2] = avg;
-            }
-        }
-        ctx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
-        return canvas.toDataURL();
-    }
-
-
-
-    $('div.api-services img').click(function(event) {
+    $('.api-services img').click(function(event) {
         window.location = "https://api.singly.com/oauth/authorize?" +
             "client_id=<?= Module::getOption('client_id'); ?>&" +
             "redirect_uri=<?= Module::getOption('redirect_uri'); ?>&" +
@@ -59,14 +37,11 @@ $(function() {
         return false;
     });
 
-    $('div.api-services img').hover(function(event) {
+    $('.api-services img').hover(function(event) {
         $(this).addClass('hover');
-        $(this).parent().find('img:first').stop().animate({opacity:1}, 0);
-
     },
     function(event) {
         $(this).removeClass('hover');
-        $(this).stop().animate({opacity:0}, 0);
     });
 });
 </script>
@@ -77,15 +52,38 @@ $(function() {
 
 Select a provider to login
 
-<div class="api-services">
-    <img title="Tumblr" alt="Tumblr" service="tumblr" auth="<?= (isset($profiles->tumblr)) ? 'true': 'false'; ?>" src="/assets/Singly/images/tumblr.png">
-    <img title="Facebook" alt="Facebook" service="facebook" auth="<?= (isset($profiles->facebook)) ? 'true': 'false'; ?>" src="/assets/Singly/images/facebook.png">
-    <img title="Foursquare" alt="Foursquare" service="foursquare" auth="<?= (isset($profiles->foursquare)) ? 'true': 'false'; ?>" src="/assets/Singly/images/foursquare.png">
-    <img title="Github" alt="Github" service="github" auth="<?= (isset($profiles->github)) ? 'true': 'false'; ?>" src="/assets/Singly/images/github.png">
-    <img title="Instagram" alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
-    <img title="Twitter" alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
-    <img title="Google" alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
-    <img title="LinkedIN" alt="Linkedin" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
-    <img title="Email" alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
-    <img title="Fitbit" alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
-</div>
+<ul class="api-services">
+    <li>
+        <img title="Tumblr" alt="Tumblr" service="tumblr" auth="<?= (isset($profiles->tumblr)) ? 'true': 'false'; ?>" src="/assets/Singly/images/tumblr.png">
+    </li>
+    <li>
+        <img title="Facebook" alt="Facebook" service="facebook" auth="<?= (isset($profiles->facebook)) ? 'true': 'false'; ?>" src="/assets/Singly/images/facebook.png">
+    </li>
+    <li>
+        <img title="Foursquare" alt="Foursquare" service="foursquare" auth="<?= (isset($profiles->foursquare)) ? 'true': 'false'; ?>" src="/assets/Singly/images/foursquare.png">
+    </li>
+    <li>
+        <img title="Github" alt="Github" service="github" auth="<?= (isset($profiles->github)) ? 'true': 'false'; ?>" src="/assets/Singly/images/github.png">
+    </li>
+    <li>
+        <img title="Instagram" alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
+    </li>
+    <li>
+        <img title="Twitter" alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
+    </li>
+    <li>
+        <img title="Google" alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
+    </li>
+    <li>
+        <img title="LinkedIN" alt="Linkedin" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
+    </li>
+    <li>
+        <img title="Email" alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
+    </li>
+    <li>
+        <img title="Fitbit" alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
+    </li>
+    <li>
+        <img title="Wordpress" alt="Wordpress" service="wordpress" auth="<?= (isset($profiles->wordpress)) ? 'true': 'false'; ?>" src="/assets/Singly/images/wordpress.png">
+    </li>
+</ul>
