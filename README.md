@@ -1,4 +1,4 @@
-Singly API for Zend Framework 2 
+ZF2 Singly Module
 ==========================================
 
 The Singly module provides authentication against any of singly.com's 
@@ -78,3 +78,7 @@ A view helper object is also provided which returns the Singly service object
 // Within a view
 $singly = $this->singly();
 ```
+
+Example Application
+-------------------
+An example application is included on the ```example``` branch.  See the readme in that branch for details.
