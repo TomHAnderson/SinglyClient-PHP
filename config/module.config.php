@@ -1,64 +1,65 @@
 <?php
 
+namespace Singly;
+
 return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         ),
-        'helper_map' => array(
-            'singly' => 'Singly\View\Helper\Singly'
+    ),
+
+    'view_helpers' => array(
+        'invokables' => array(
+            'singly' => 'Singly\View\Helper\Singly',
         ),
     ),
 
-    'controller' => array(
-        'classes' => array(
-            'singly' => 'Singly\Controller\SinglyController',
+    'controllers' => array(
+        'invokables' => array(
+            'singly' => 'Singly\Controller\SinglyController'
         ),
     ),
 
     'router' => array(
         'routes' => array(
             'singly' => array(
-                'type' => 'Literal',
-                'priority' => 1000,
+                'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route' => '/user',
+                    'route'    => '/singly',
                     'defaults' => array(
                         'controller' => 'singly',
-                        'action' => 'index',
+                        'action'     => 'index',
                     ),
                 ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'login' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/login',
-                            'defaults' => array(
-                                'controller' => 'singly',
-                                'action' => 'login',
-                            ),
-                        ),
+            ),
+            'singlyLogin' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/singly/login',
+                    'defaults' => array(
+                        'controller' => 'singly',
+                        'action' => 'login',
                     ),
-                    'takelogin' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/takelogin',
-                            'defaults' => array(
-                                'controller' => 'singly',
-                                'action' => 'takelogin',
-                            ),
-                        ),
+                ),
+            ),
+            'singlyTakeLogin' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/singly/takelogin',
+                    'defaults' => array(
+                        'controller' => 'singly',
+                        'action' => 'takelogin',
                     ),
-                    'logout' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/logout',
-                            'defaults' => array(
-                                'controller' => 'singly',
-                                'action' => 'logout',
-                            ),
-                        ),
+                ),
+            ),
+            'singlyLogout' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/singly/logout',
+                    'defaults' => array(
+                        'controller' => 'singly',
+                        'action' => 'logout',
                     ),
                 ),
             ),
@@ -68,33 +69,32 @@ return array(
     'di' => array(
         'instance' => array(
             'alias' => array(
-                'singlyService' => 'Singly\Service\Singly',
-                'singlyAdapter' => 'Singly\Authentication\Adapter\Singly',
-                'authenticationService' => 'Zend\Authentication\AuthenticationService',
+                'serviceSingly' => 'Singly\Service\Singly',
+                'adapterSingly' => 'Singly\Authentication\Adapter\Singly',
             ),
 
-            'singlyService' => array(
+            'serviceSingly' => array(
                 'parameters' => array(
                     'serviceManager' => 'Zend\ServiceManager\ServiceManager',
                 )
             ),
 
-            'singlyAdapter' => array(
+            'adapterSingly' => array(
                 'parameters' => array(
-                    'service' => 'singlyService',
+                    'service' => 'serviceSingly',
                 ),
             ),
 
             'Singly\View\Helper\Singly' => array(
                 'parameters' => array(
-                    'service' => 'singlyService',
+                    'service' => 'serviceSingly',
                 ),
             ),
 
-            'authenticationService' => array(
+            'Zend\Authentication\AuthenticationService' => array(
                 'parameters' => array(
                     'storage' => null,
-                    'adapter' => 'singlyAdapter',
+                    'adapter' => 'adapterSingly',
                 ),
             ),
         ),

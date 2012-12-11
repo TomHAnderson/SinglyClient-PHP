@@ -8,53 +8,56 @@
 
 namespace Singly\Controller;
 
-use Zend\Mvc\Controller\ActionController,
+use Zend\Mvc\Controller\AbstractActionController,
     Zend\Authentication\AuthenticationService,
     Singly\Authentication\Adapter\Singly;
 
-class SinglyControllerAbstract extends ActionController
+class SinglyControllerAbstract extends AbstractActionController
 {
 
     public function loginAction() {
-        $auth = $this->getServiceLocator()->get('authenticationService');
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
 
         if ($auth->hasIdentity()) {
-            return $this->plugin('redirect')->toUrl('/user');
+            return $this->plugin('redirect')->toUrl('/singly');
         }
 
-        return array();
+        return array(
+            'config' => $this->getServiceLocator()->get('Config'),
+        );
     }
 
     public function takeloginAction()
     {
-        $code = $this->getRequest()->query()->get('code');
-        $singly= $this->getServiceLocator()->get('singlyService');
+        $code = $this->getRequest()->getQuery()->get('code');
+        $singly= $this->getServiceLocator()->get('serviceSingly');
         // Sending code to getAccessToken authenticates the code
         $singly->getAccessToken($code);
 
-        $auth = $this->getServiceLocator()->get('authenticationService');
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         $result = $auth->authenticate();
 
         if (!$result->isValid()) throw new \Exception('Invalid auth token returned');
 
-        return $this->plugin('redirect')->toUrl('/user');
+        return $this->plugin('redirect')->toUrl('/singly');
     }
 
     public function indexAction()
     {
-        $auth = $this->getServiceLocator()->get('authenticationService');
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
 
         if (!$auth->hasIdentity()) {
-            return $this->plugin('redirect')->toUrl('/user/login');
+            return $this->plugin('redirect')->toUrl('/singly/login');
         }
 
         return array(
+            'config' => $this->getServiceLocator()->get('Config'),
         );
     }
 
     public function logoutAction() {
 
-        $auth = $this->getServiceLocator()->get('authenticationService');
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         $auth->clearIdentity();
 
         return array();

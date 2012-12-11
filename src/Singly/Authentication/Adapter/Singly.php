@@ -35,6 +35,7 @@ class Singly implements AdapterInterface {
         $http = new Client();
         $http->setUri('https://api.singly.com/profiles');
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getService()->getAccessToken()
