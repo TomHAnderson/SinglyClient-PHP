@@ -29,7 +29,7 @@ class Singly {
     }
 
     public function getIdentity() {
-        $auth = $this->getServiceManager()->get('authenticationService');
+        $auth = $this->getServiceManager()->get('Zend\Authentication\AuthenticationService');
 
         if ($auth->hasIdentity()) {
             return $auth->getIdentity();
@@ -60,6 +60,7 @@ class Singly {
         $http->setUri('https://api.singly.com/oauth/access_token');
         $http->setMethod('POST');
 
+        $http->setOptions(array('sslverifypeer' => false));
         $http->setParameterPost(array(
             'client_id' => Module::getOption('client_id'),
             'client_secret' => Module::getOption('client_secret'),
@@ -79,7 +80,7 @@ class Singly {
         return $this->accessToken;
     }
 
-    public function getServices($service = null, $endpoint = null)
+    public function getServices($service = null, $endpoint = null, $options = array())
     {
         if (!$this->getAccessToken())
             throw new InvalidArgumentException('Access token has not been set');
@@ -90,10 +91,10 @@ class Singly {
         $uri .= ($service AND $endpoint) ? '/' . $endpoint: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
-        $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
-        ));
+        $options['access_token'] = $this->getAccessToken();
+        $http->setParameterGet($options);
 
         $response = $http->send();
         $content = $response->getBody();
@@ -110,6 +111,7 @@ class Singly {
         $uri .= ($type) ? '/' . $type: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()
@@ -136,6 +138,7 @@ class Singly {
         $uri .= "/$service/$path";
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()
@@ -161,6 +164,7 @@ class Singly {
         $uri .= ($service) ? '/' . $service: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()
@@ -186,6 +190,7 @@ class Singly {
         $uri .= ($id) ? '/' . $id: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()
@@ -206,6 +211,7 @@ class Singly {
         $uri .= ($id) ? '/' . $id: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()
@@ -231,6 +237,7 @@ class Singly {
         $uri .= ($url) ? '/' . $url: '';
         $http->setUri($uri);
         $http->setMethod('GET');
+        $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
             'access_token' => $this->getAccessToken()

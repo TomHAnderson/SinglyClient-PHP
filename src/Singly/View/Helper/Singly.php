@@ -17,7 +17,7 @@ class Singly extends AbstractHelper
     /**
      * @var AuthenticationService
      */
-    protected $singlyService;
+    protected $serviceSingly;
 
     /**
      * __invoke
@@ -41,7 +41,7 @@ class Singly extends AbstractHelper
      */
     public function getService()
     {
-        return $this->singlyService;
+        return $this->serviceSingly;
     }
 
     /**
@@ -51,7 +51,7 @@ class Singly extends AbstractHelper
      */
     public function setService(SinglyService $service)
     {
-        $this->singlyService = $service;
+        $this->serviceSingly = $service;
         return $this;
     }
 }
