@@ -1,4 +1,6 @@
 <?php
+namespace Singly;
+
 use Singly\Module;
 ?>
 
@@ -25,8 +27,6 @@ use Singly\Module;
     }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
 <script>
 $(function() {
     $('.api-services img').click(function(event) {
@@ -50,40 +50,21 @@ $(function() {
 
 ?>
 
-Select a provider to login
+<h1>Login</h1>
 
 <ul class="api-services">
+<?php
+    foreach ($config['singly']['services'] as $name => $service) {
+?>
     <li>
-        <img title="Tumblr" alt="Tumblr" service="tumblr" auth="<?= (isset($profiles->tumblr)) ? 'true': 'false'; ?>" src="/assets/Singly/images/tumblr.png">
+        <img title="<?= $this->escapeHtml($service['name']); ?>"
+            alt="<?= $this->escapeHtml($service['name']); ?>"
+            service="<?= $name; ?>"
+            auth="<?= (isset($profiles->$name)) ? 'true': 'false'; ?>"
+            src="<?= $service['icon']; ?>"
+        >
     </li>
-    <li>
-        <img title="Facebook" alt="Facebook" service="facebook" auth="<?= (isset($profiles->facebook)) ? 'true': 'false'; ?>" src="/assets/Singly/images/facebook.png">
-    </li>
-    <li>
-        <img title="Foursquare" alt="Foursquare" service="foursquare" auth="<?= (isset($profiles->foursquare)) ? 'true': 'false'; ?>" src="/assets/Singly/images/foursquare.png">
-    </li>
-    <li>
-        <img title="Github" alt="Github" service="github" auth="<?= (isset($profiles->github)) ? 'true': 'false'; ?>" src="/assets/Singly/images/github.png">
-    </li>
-    <li>
-        <img title="Instagram" alt="Instagram" service="instagram" auth="<?= (isset($profiles->instagram)) ? 'true': 'false'; ?>" src="/assets/Singly/images/instagram.png">
-    </li>
-    <li>
-        <img title="Twitter" alt="Twitter" service="twitter" auth="<?= (isset($profiles->twitter)) ? 'true': 'false'; ?>" src="/assets/Singly/images/twitter.png">
-    </li>
-    <li>
-        <img title="Google" alt="Google" service="gcontacts" auth="<?= (isset($profiles->gcontacts)) ? 'true': 'false'; ?>" src="/assets/Singly/images/gcontacts.png">
-    </li>
-    <li>
-        <img title="LinkedIN" alt="Linkedin" service="linkedin" auth="<?= (isset($profiles->linkedin)) ? 'true': 'false'; ?>" src="/assets/Singly/images/linkedin.png">
-    </li>
-    <li>
-        <img title="Email" alt="Email" service="email" auth="<?= (isset($profiles->email)) ? 'true': 'false'; ?>" src="/assets/Singly/images/email.png">
-    </li>
-    <li>
-        <img title="Fitbit" alt="Fitbit" service="fitbit" auth="<?= (isset($profiles->fitbit)) ? 'true': 'false'; ?>" src="/assets/Singly/images/fitbit.png">
-    </li>
-    <li>
-        <img title="Wordpress" alt="Wordpress" service="wordpress" auth="<?= (isset($profiles->wordpress)) ? 'true': 'false'; ?>" src="/assets/Singly/images/wordpress.png">
-    </li>
+<?php
+}
+?>
 </ul>

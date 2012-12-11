@@ -22,7 +22,9 @@ class SinglyControllerAbstract extends AbstractActionController
             return $this->plugin('redirect')->toUrl('/singly');
         }
 
-        return array();
+        return array(
+            'config' => $this->getServiceLocator()->get('Config'),
+        );
     }
 
     public function takeloginAction()
@@ -49,6 +51,7 @@ class SinglyControllerAbstract extends AbstractActionController
         }
 
         return array(
+            'config' => $this->getServiceLocator()->get('Config'),
         );
     }
 

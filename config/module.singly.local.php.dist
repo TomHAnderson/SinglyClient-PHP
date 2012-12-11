@@ -1,11 +1,13 @@
 <?php
 
+namespace Singly;
+
 return array(
     'singly' => array(
         'client_id' => "",
         'client_secret' => "",
         'redirect_uri' => "",
-        'modules' => array(
+        'services' => array(
             'tumblr' => array(
                 'name' => 'Tumblr',
                 'icon' => '/assets/Singly/images/tumblr.png',
