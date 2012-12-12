@@ -30,22 +30,22 @@ Installation
 
 Authentication
 --------------
-http://localhost/user/login
+http://localhost/singly/login
     Show the available services from Singly to login
 
-http://localhost/user 
+http://localhost/singly
     Show the authenticated user
 
-http://localhost/user/logout
+http://localhost/singly/logout
     End the authentication session
     
 Usage
 --------
-Once a user is authenticated at /user/login you may use the Singly service object to interact with the API
+Once a user is authenticated at /singly/login you may use the Singly service object to interact with the API
 
 ```php
 // Init service object
-$singly = $this->getServiceLocator()->get('singlyService');
+$singly = $this->getServiceLocator()->get('serviceSingly');
 
 // Get auth identity 
 $id = $singly->getIdentity();
@@ -56,7 +56,7 @@ API Services through Singly
 $singly->getProfiles($service = null, $parameters = null);
 
 // Services
-$singly->getServices($service = null, $endpoint = null);
+$singly->getServices($service = null, $endpoint = null, $options = array());
 
 // Types
 $singly->getTypes($type = null, $parameters = null);
@@ -81,4 +81,4 @@ $singly = $this->singly();
 
 Example Application
 -------------------
-An example application is included on the ```example``` branch.  See the readme in that branch for details.
+An example application is included on the ```example``` branch.  See the README.md in that branch for details.
