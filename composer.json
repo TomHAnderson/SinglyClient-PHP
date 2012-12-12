@@ -1,6 +1,6 @@
 {
-    "name": "TomHAnderson/Singly",
-    "description": "Authentication for singly.com",
+    "name": "singly/singly-zf2-module",
+    "description": "A Zend Framework 2 module for Singly auth and API querying",
     "type": "library",
     "license": "MIT",
     "keywords": [
