@@ -8,6 +8,10 @@
         "zf2",
         "authentication"
     ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*"
+    },
     "homepage": "http://www.singly.com",
     "authors": [
         {
