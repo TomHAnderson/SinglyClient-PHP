@@ -14,7 +14,7 @@ Installation
 
      ```json
      "require": {
-         "TomHAnderson/Singly": "dev-master"
+         "singly/singly-zf2-module": "dev-master"
      }
      ```
   3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
