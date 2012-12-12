@@ -4,7 +4,7 @@ ZF2 Singly Module
 The Singly module provides authentication against any of singly.com's 
 providers and API access through a service object.
 
-Singly documentation may be found at http://dev.singly.com
+Singly documentation may be found at https://singly.com/docs
 
 Installation
 ------------
