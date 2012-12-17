@@ -41,13 +41,13 @@ http://localhost/singly/logout
     
 Usage
 --------
-Once a user is authenticated at /singly/login you may use the Singly service object to interact with the API
+Once a user is authenticated with the Zend\Authentication\Adapter\Singly adapter service you may use the Singly service object to interact with the API
 
 ```php
 // Init service object
 $singly = $this->getServiceLocator()->get('serviceSingly');
 
-// Get auth identity 
+// Get singly identity 
 $id = $singly->getIdentity();
 ```
 API Services through Singly
@@ -82,3 +82,5 @@ $singly = $this->singly();
 Example Application
 -------------------
 An example application is included on the ```example``` branch.  See the README.md in that branch for details.
+
+The example application provides an important bifrication of the Singly namespace by integrating the library with Zend Framework and providing a view layer of Controllers and views.  The author recommends you use this branch to start any new Sinlgy project.

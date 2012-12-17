@@ -20,7 +20,7 @@ class Singly {
     public function __construct($serviceManager, $clientId, $clientSecret, $redirectUri)
     {
         $this->setServiceManager($serviceManager)
-            ->setClientId($clientId);
+            ->setClientId($clientId)
             ->setClientSecret($clientSecret)
             ->setRedirectUri($redirectUri);
     }
