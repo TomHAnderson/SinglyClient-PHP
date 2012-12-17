@@ -79,6 +79,13 @@ class Singly {
         }
     }
 
+    public function getLoginUrl($service) {
+        return 'https://api.singly.com/oauth/authorize?' .
+            'client_id=' . $this->getClientId() . '&' .
+            'redirect_uri=' . $this->getRedirectUri() . '&' .
+            'service=' . $service;
+    }
+
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;

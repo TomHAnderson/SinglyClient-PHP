@@ -49,14 +49,18 @@ $singly = $this->getServiceLocator()->get('serviceSingly');
 
 // Get singly identity 
 $id = $singly->getIdentity();
+
+// Get a login url 
+$url = $singly->getLoginUrl($serviceName);
 ```
+
 API Services through Singly
 ```php
 // Profiles
 $singly->getProfiles($service = null, $parameters = null);
 
 // Services
-$singly->getServices($service = null, $endpoint = null, $options = array());
+$singly->getServices($service = null, $endpoint = null, $parameters = array());
 
 // Types
 $singly->getTypes($type = null, $parameters = null);
