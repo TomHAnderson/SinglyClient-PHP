@@ -25,7 +25,7 @@ Installation
      ```php
      'Singly',
      ```
-  6. drop `vendor/TomHAnderson/Singly/config/module.singly.local.php.dist` into your application's
+  6. drop `vendor/singly/singly-zf2-module/config/module.singly.local.php.dist` into your application's
      `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
 
 Authentication

@@ -9,22 +9,12 @@
 namespace Singly\View\Helper;
 
 use Zend\View\Helper\AbstractHelper,
-    Zend\Authentication\AuthenticationService,
     Singly\Service\Singly as SinglyService;
 
 class Singly extends AbstractHelper
 {
-    /**
-     * @var AuthenticationService
-     */
     protected $serviceSingly;
 
-    /**
-     * __invoke
-     *
-     * @access public
-     * @return ZfcUser\Model\UserInterface
-    */
     public function __invoke()
     {
         if ($this->getService()) {
@@ -34,21 +24,11 @@ class Singly extends AbstractHelper
         throw new \Exception('Singly service has not been set on view helper');
     }
 
-    /**
-     * Get authService.
-     *
-     * @return AuthenticationService
-     */
     public function getService()
     {
         return $this->serviceSingly;
     }
 
-    /**
-     * Set authService.
-     *
-     * @param AuthenticationService $authService
-     */
     public function setService(SinglyService $service)
     {
         $this->serviceSingly = $service;

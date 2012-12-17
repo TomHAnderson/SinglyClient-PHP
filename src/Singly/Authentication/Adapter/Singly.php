@@ -12,26 +12,25 @@ use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     Zend\Http\Client,
     Zend\Json\Json,
-    Singly\Module,
     Zend\Authentication\Exception\InvalidArgumentException;
 
-class Singly implements AdapterInterface {
-
-    private $serviceManager;
+class Singly implements AdapterInterface
+{
     private $service;
 
-    public function setService($service) {
+    public function setService($service)
+    {
         $this->service = $service;
         return $this;
     }
 
-    public function getService() {
+    public function getService()
+    {
         return $this->service;
     }
 
-    public function authenticate() {
-
-        // Fetch the user's profile
+    public function authenticate()
+    {
         $http = new Client();
         $http->setUri('https://api.singly.com/profiles');
         $http->setMethod('GET');
@@ -52,5 +51,4 @@ class Singly implements AdapterInterface {
 
         return new Result(Result::SUCCESS, $decoded->id, array());
     }
-
 }

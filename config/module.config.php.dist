@@ -3,9 +3,43 @@
 namespace Singly;
 
 return array(
-    'view_manager' => array(
-        'template_path_stack' => array(
-            __DIR__ . '/../view'
+    'di' => array(
+        'instance' => array(
+            'serviceSingly' => array(
+                'parameters' => array(
+                    'serviceManager' => 'Zend\ServiceManager\ServiceManager',
+                    /**
+                     * Add your own client_id client_secret redirect_uri
+                     */
+                    'clientId' => '',
+                    'clientSecret' => '',
+                    'redirectUri' => 'http://localhost:8082/singly/takelogin',
+                ),
+            ),
+
+            'alias' => array(
+                'serviceSingly' => 'Singly\Service\Singly',
+                'adapterSingly' => 'Singly\Authentication\Adapter\Singly',
+            ),
+
+            'adapterSingly' => array(
+                'parameters' => array(
+                    'service' => 'serviceSingly',
+                ),
+            ),
+
+            'Singly\View\Helper\Singly' => array(
+                'parameters' => array(
+                    'service' => 'serviceSingly',
+                ),
+            ),
+
+            'Zend\Authentication\AuthenticationService' => array(
+                'parameters' => array(
+                    'storage' => null,
+                    'adapter' => 'adapterSingly',
+                ),
+            ),
         ),
     ),
 
@@ -15,12 +49,25 @@ return array(
         ),
     ),
 
+/**
+ * Example controller & views
+ *
     'controllers' => array(
         'invokables' => array(
             'singly' => 'Singly\Controller\SinglyController'
         ),
     ),
 
+    'view_manager' => array(
+        'template_path_stack' => array(
+            __DIR__ . '/../view'
+        ),
+    ),
+*/
+
+/**
+ * Example authentication routes
+ *
     'router' => array(
         'routes' => array(
             'singly' => array(
@@ -65,38 +112,5 @@ return array(
             ),
         ),
     ),
-
-    'di' => array(
-        'instance' => array(
-            'alias' => array(
-                'serviceSingly' => 'Singly\Service\Singly',
-                'adapterSingly' => 'Singly\Authentication\Adapter\Singly',
-            ),
-
-            'serviceSingly' => array(
-                'parameters' => array(
-                    'serviceManager' => 'Zend\ServiceManager\ServiceManager',
-                )
-            ),
-
-            'adapterSingly' => array(
-                'parameters' => array(
-                    'service' => 'serviceSingly',
-                ),
-            ),
-
-            'Singly\View\Helper\Singly' => array(
-                'parameters' => array(
-                    'service' => 'serviceSingly',
-                ),
-            ),
-
-            'Zend\Authentication\AuthenticationService' => array(
-                'parameters' => array(
-                    'storage' => null,
-                    'adapter' => 'adapterSingly',
-                ),
-            ),
-        ),
-    ),
+*/
 );

@@ -7,25 +7,66 @@ use Singly\Service\Exception\InvalidArgumentException,
     Zend\Authentication\Result,
     Zend\Http\Client,
     Zend\Json\Json,
-    Singly\Module,
     Zend\Session\Container as SessionContainer,
     Zend\ServiceManager\ServiceManager;
 
 class Singly {
     private $accessToken;
     private $serviceManager;
+    private $clientId;
+    private $clientSecret;
+    private $redirectUri;
 
-    public function __construct($serviceManager) {
-        $this->setServiceManager($serviceManager);
+    public function __construct($serviceManager, $clientId, $clientSecret, $redirectUri)
+    {
+        $this->setServiceManager($serviceManager)
+            ->setClientId($clientId);
+            ->setClientSecret($clientSecret)
+            ->setRedirectUri($redirectUri);
     }
 
-    public function setServiceManager(ServiceManager $manager) {
+    public function setServiceManager(ServiceManager $manager)
+    {
         $this->serviceManager = $manager;
         return $this;
     }
 
-    public function getServiceManager() {
+    public function getServiceManager()
+    {
         return $this->serviceManager;
+    }
+
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    public function setClientId($value)
+    {
+        $this->clientId = $value;
+        return $this;
+    }
+
+    public function getClientSecret()
+    {
+        return $this->clientSecret;
+    }
+
+    public function setClientSecret($value)
+    {
+        $this->clientSecret = $value;
+        return $this;
+    }
+
+    public function getRedirectUri()
+    {
+        return $this->redirectUri;
+    }
+
+    public function setRedirectUri($value)
+    {
+        $this->redirectUri = $value;
+        return $this;
     }
 
     public function getIdentity() {
@@ -62,8 +103,8 @@ class Singly {
 
         $http->setOptions(array('sslverifypeer' => false));
         $http->setParameterPost(array(
-            'client_id' => Module::getOption('client_id'),
-            'client_secret' => Module::getOption('client_secret'),
+            'client_id' => $this->getClientId(),
+            'client_secret' => $this->getClientSecret(),
             'code' => $code,
         ));
 
