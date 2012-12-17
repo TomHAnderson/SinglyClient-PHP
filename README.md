@@ -25,7 +25,7 @@ Installation
      ```php
      'Singly',
      ```
-  6. drop `vendor/TomHAnderson/Singly/config/module.singly.local.php.dist` into your application's
+  6. drop `vendor/singly/singly-zf2-module/config/module.singly.local.php.dist` into your application's
      `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
 
 Authentication
@@ -41,22 +41,26 @@ http://localhost/singly/logout
     
 Usage
 --------
-Once a user is authenticated at /singly/login you may use the Singly service object to interact with the API
+Once a user is authenticated with the Zend\Authentication\Adapter\Singly adapter service you may use the Singly service object to interact with the API
 
 ```php
 // Init service object
 $singly = $this->getServiceLocator()->get('serviceSingly');
 
-// Get auth identity 
+// Get singly identity 
 $id = $singly->getIdentity();
+
+// Get a login url 
+$url = $singly->getLoginUrl($serviceName);
 ```
+
 API Services through Singly
 ```php
 // Profiles
 $singly->getProfiles($service = null, $parameters = null);
 
 // Services
-$singly->getServices($service = null, $endpoint = null, $options = array());
+$singly->getServices($service = null, $endpoint = null, $parameters = array());
 
 // Types
 $singly->getTypes($type = null, $parameters = null);
@@ -82,3 +86,5 @@ $singly = $this->singly();
 Example Application
 -------------------
 An example application is included on the ```example``` branch.  See the README.md in that branch for details.
+
+The example application provides an important bifrication of the Singly namespace by integrating the library with Zend Framework and providing a view layer of Controllers and views.  The author recommends you use this branch to start any new Sinlgy project.

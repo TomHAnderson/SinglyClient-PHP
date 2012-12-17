@@ -31,8 +31,8 @@ use Singly\Module;
 $(function() {
     $('.api-services img').click(function(event) {
         window.location = "https://api.singly.com/oauth/authorize?" +
-            "client_id=<?= Module::getOption('client_id'); ?>&" +
-            "redirect_uri=<?= Module::getOption('redirect_uri'); ?>&" +
+            "client_id=<?= $this->singly()->getClientId(); ?>&" +
+            "redirect_uri=<?= $this->singly()->getRedirectUri(); ?>&" +
             "service=" + $(this).attr('service');
         return false;
     });

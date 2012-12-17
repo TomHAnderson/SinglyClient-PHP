@@ -8,7 +8,7 @@
 
 namespace Singly;
 
-final class Version 
+final class Version
 {
-    const VERSION = '1.0';
+    const VERSION = 'v0.1.1.0';
 }
