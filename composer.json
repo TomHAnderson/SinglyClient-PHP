@@ -1,6 +1,6 @@
 {
-    "name": "singly/singly-zf2-module",
-    "description": "A Zend Framework 2 module for Singly auth and API querying",
+    "name": "singly/singly-tha",
+    "description": "A Zend Framework 2 library for Singly auth and API querying",
     "type": "library",
     "license": "MIT",
     "keywords": [
