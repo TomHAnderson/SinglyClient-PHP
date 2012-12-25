@@ -24,15 +24,14 @@ Use
 Create the Singly service
 
 ```php
-    $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
-
-    $loginUrl = $singly->getLoginUrl('facebook');
+$singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
+$loginUrl = $singly->getLoginUrl('facebook');
 ```
 
 Get an access token in a redirectUri
 ```php
-    $code = $_GET['code'];
-    $singly->setAccessToken($singly->getAccessToken($code));
+$code = $_GET['code'];
+$singly->setAccessToken($singly->getAccessToken($code));
 ```
 
 API Services
