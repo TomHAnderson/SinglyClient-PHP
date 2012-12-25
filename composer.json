@@ -1,18 +1,17 @@
 {
     "name": "singly/singly-tha",
-    "description": "A Zend Framework 2 library for Singly auth and API querying",
+    "description": "A PHP library for the Singly API",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "singly",
-        "zf2",
-        "authentication"
+        "php"
     ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*"
     },
-    "homepage": "http://www.singly.com",
+    "homepage": "http://singly.com",
     "authors": [
         {
             "name": "Tom Anderson",

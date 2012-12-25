@@ -7,33 +7,21 @@ use Singly\Service\Exception\InvalidArgumentException,
     Zend\Authentication\Result,
     Zend\Http\Client,
     Zend\Json\Json,
-    Zend\Session\Container as SessionContainer,
-    Zend\ServiceManager\ServiceManager;
+    Zend\Session\Container as SessionContainer;
 
-class Singly {
+class Singly
+{
     private $accessToken;
-    private $serviceManager;
     private $clientId;
     private $clientSecret;
     private $redirectUri;
 
-    public function __construct($serviceManager, $clientId, $clientSecret, $redirectUri)
+    public function __construct($clientId, $clientSecret = '', $redirectUri = '')
     {
-        $this->setServiceManager($serviceManager)
-            ->setClientId($clientId)
+        if (is_array($clientId)) extract($clientId);
+        $this->setClientId($clientId)
             ->setClientSecret($clientSecret)
             ->setRedirectUri($redirectUri);
-    }
-
-    public function setServiceManager(ServiceManager $manager)
-    {
-        $this->serviceManager = $manager;
-        return $this;
-    }
-
-    public function getServiceManager()
-    {
-        return $this->serviceManager;
     }
 
     public function getClientId()
@@ -69,17 +57,8 @@ class Singly {
         return $this;
     }
 
-    public function getIdentity() {
-        $auth = $this->getServiceManager()->get('Zend\Authentication\AuthenticationService');
-
-        if ($auth->hasIdentity()) {
-            return $auth->getIdentity();
-        } else {
-            return false;
-        }
-    }
-
-    public function getLoginUrl($service) {
+    public function getLoginUrl($service)
+    {
         return 'https://api.singly.com/oauth/authorize?' .
             'client_id=' . $this->getClientId() . '&' .
             'redirect_uri=' . $this->getRedirectUri() . '&' .
@@ -92,17 +71,24 @@ class Singly {
         return $this;
     }
 
-    public function getAccessToken($code = null) {
+    public function verifyAccessToken()
+    {
+        if (!$this->getAccessToken())
+            throw new InvalidArgumentException('Access token has not been set');
+    }
+
+    public function getAccessToken($code = null)
+    {
         $session = new SessionContainer('Singly');
         if (isset($session->access_token)) {
             return $session->access_token;
         }
 
-        if (!$code AND !$this->accessToken)
-            throw new \Exception('No access token provided');
-
         if (!$code AND $this->accessToken)
             return $this->accessToken;
+
+        if (!$code AND !$this->accessToken)
+            return false;
 
         $http = new Client();
         $http->setUri('https://api.singly.com/oauth/access_token');
@@ -130,8 +116,7 @@ class Singly {
 
     public function getServices($service = null, $endpoint = null, $options = array())
     {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/services';
@@ -151,8 +136,7 @@ class Singly {
 
     public function getTypes($type = null, $parameters = null)
     {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/types';
@@ -178,8 +162,7 @@ class Singly {
 
     public function getProxy($service, $path, $parameters = null)
     {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/proxy';
@@ -203,9 +186,9 @@ class Singly {
         return Json::decode($content);
     }
 
-    public function getProfiles($service = null, $parameters = null) {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+    public function getProfiles($service = null, $parameters = null)
+    {
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -229,9 +212,9 @@ class Singly {
         return Json::decode($content);
     }
 
-    public function getById($id) {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+    public function getById($id)
+    {
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/id';
@@ -249,9 +232,9 @@ class Singly {
         return Json::decode($content);
     }
 
-    public function getByContact($service, $id, $parameters = null) {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+    public function getByContact($service, $id, $parameters = null)
+    {
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -276,9 +259,9 @@ class Singly {
         return Json::decode($content);
     }
 
-    public function getByUrl($url, $parameters = null) {
-        if (!$this->getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+    public function getByUrl($url, $parameters = null)
+    {
+        $this->verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';

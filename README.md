@@ -1,60 +1,41 @@
-ZF2 Singly Module
-==========================================
+Singly PHP Library
+===============================
+This is a library to abstract the Singly API to PHP objects.  
 
-The Singly module provides authentication against any of singly.com's 
-providers and API access through a service object.
-
-Singly documentation may be found at https://singly.com/docs
+Example 
+-------
+An example application is included on the ```example``` branch.  See the README.md in that branch for details.
 
 Installation
 ------------
-#### Installation steps
-  1. begin with a Zend Framework 2 skeleton application
-  2. edit the `composer.json` file with following contents:
+  1. edit `composer.json` file with following contents:
 
      ```json
      "require": {
-         "singly/singly-zf2-module": "dev-master"
+        "singly/singly-tha": "dev-master"
      }
      ```
-  3. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
+  2. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
      http://getcomposer.org/installer and execute it with PHP)
-  4. run `php composer.phar install`
-  5. open `my/project/directory/configs/application.config.php` and add following keys to your `modules`
+  3. run `php composer.phar install`
 
-     ```php
-     'Singly',
-     ```
-  6. drop `vendor/singly/singly-zf2-module/config/module.singly.local.php.dist` into your application's
-     `config/autoload` directory, rename it to `module.singly.local.php` and make the appropriate changes.
-
-Authentication
---------------
-http://localhost/singly/login
-    Show the available services from Singly to login
-
-http://localhost/singly
-    Show the authenticated user
-
-http://localhost/singly/logout
-    End the authentication session
-    
-Usage
---------
-Once a user is authenticated with the Zend\Authentication\Adapter\Singly adapter service you may use the Singly service object to interact with the API
+Use
+---
+Create the Singly service
 
 ```php
-// Init service object
-$singly = $this->getServiceLocator()->get('serviceSingly');
+    $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
 
-// Get singly identity 
-$id = $singly->getIdentity();
-
-// Get a login url 
-$url = $singly->getLoginUrl($serviceName);
+    $loginUrl = $singly->getLoginUrl('facebook');
 ```
 
-API Services through Singly
+Get an access token in a redirectUri
+```php
+    $code = $_GET['code'];
+    $singly->setAccessToken($singly->getAccessToken($code));
+```
+
+API Services
 ```php
 // Profiles
 $singly->getProfiles($service = null, $parameters = null);
@@ -83,8 +64,3 @@ A view helper object is also provided which returns the Singly service object
 $singly = $this->singly();
 ```
 
-Example Application
--------------------
-An example application is included on the ```example``` branch.  See the README.md in that branch for details.
-
-The example application provides an important bifrication of the Singly namespace by integrating the library with Zend Framework and providing a view layer of Controllers and views.  The author recommends you use this branch to start any new Sinlgy project.
