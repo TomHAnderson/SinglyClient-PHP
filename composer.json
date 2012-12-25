@@ -1,27 +1,5 @@
 {
-    "name": "singly/singly-tha",
-    "description": "A PHP library for the Singly API",
-    "type": "library",
-    "license": "MIT",
-    "keywords": [
-        "singly",
-        "php"
-    ],
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*"
-    },
-    "homepage": "http://singly.com",
-    "authors": [
-        {
-            "name": "Tom Anderson",
-            "email": "tom.h.anderson@gmail.com",
-            "homepage": "http://db.etree.org/"
-        }
-    ],
-    "autoload": {
-        "psr-0": {
-            "Singly": "src/"
-        }
+        "singly/singly-tha": "dev-master"
     }
 }

@@ -1,66 +1,19 @@
-Singly PHP Library
-===============================
-This is a library to abstract the Singly API to PHP objects.  
+Singly PHP Example
+===================
+A bare bones example of using the Singly PHP library
 
-Example 
--------
-An example application is included on the ```example``` branch.  See the README.md in that branch for details.
+To use this branch run ``` git branch -f example origin/example ``` then ``` git checkout example ```
 
-Installation
-------------
-  1. edit `composer.json` file with following contents:
+Install
+=======
+1. install composer via ``` curl -s http://getcomposer.org/installer | php ``` (on windows, download http://getcomposer.org/installer and execute it with PHP)
 
-     ```json
-     "require": {
-        "singly/singly-tha": "dev-master"
-     }
-     ```
-  2. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
-     http://getcomposer.org/installer and execute it with PHP)
-  3. run `php composer.phar install`
+2. run ``` php composer.phar install ```
 
-Use
----
-Create the Singly service
+3. edit index.php and add your Singly Client ID and Client Secret
 
-```php
-    $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
+4. run ``` php -S localhost:8082 ``` and browse to ``` http://localhost:8082/index.php ```
 
-    $loginUrl = $singly->getLoginUrl('facebook');
-```
+5. you will be redirected to facebook login and after logging in
 
-Get an access token in a redirectUri
-```php
-    $code = $_GET['code'];
-    $singly->setAccessToken($singly->getAccessToken($code));
-```
-
-API Services
-```php
-// Profiles
-$singly->getProfiles($service = null, $parameters = null);
-
-// Services
-$singly->getServices($service = null, $endpoint = null, $parameters = array());
-
-// Types
-$singly->getTypes($type = null, $parameters = null);
-
-// Global Items
-$singly->getById($id);
-
-// Proxy to Service API
-$singly->getProxy($service, $path, $parameters = null)
-
-// By URL
-$singly->getByUrl($url, $parameters = null);
-
-// By Contact ID
-$singly->getByContact($service, $id, $parameters = null);
-```
-A view helper object is also provided which returns the Singly service object
-```php
-// Within a view
-$singly = $this->singly();
-```
-
+6. you will be shown your facebook feed as a raw object print_r.
