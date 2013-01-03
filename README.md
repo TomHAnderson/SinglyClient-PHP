@@ -22,13 +22,24 @@ Installation
 Use
 ---
 Create the Singly service
-
 ```php
 $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
+
+// Get a login url to authorize a service
 $loginUrl = $singly->getLoginUrl('facebook');
 ```
 
-Get an access token in a redirectUri
+De-authorize a service.  This will un-link a service from the user's profile.
+```php
+$singly->deleteService('facebook');
+```
+
+De-authorize all services.  This will delete a user's profile.
+```php
+$singly->deleteAll();
+```
+
+Get an access token in a redirectUri / callback handler
 ```php
 $code = $_GET['code'];
 $singly->setAccessToken($singly->getAccessToken($code));

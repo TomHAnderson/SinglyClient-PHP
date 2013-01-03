@@ -65,6 +65,30 @@ class Singly
             'service=' . $service;
     }
 
+    public function deleteAll() {
+        return $this->deleteService();
+    }
+
+    public function deleteService($service = '')
+    {
+        $this->verifyAccessToken();
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/v0/profiles';
+        $uri .= ($service) ? '/' . $service: '';
+        $http->setUri($uri);
+        $http->setMethod('DELETE');
+        $http->setOptions(array('sslverifypeer' => false));
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
