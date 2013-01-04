@@ -29,6 +29,14 @@ $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
 $loginUrl = $singly->getLoginUrl('facebook');
 ```
 
+When a token is authenticated it is stored in the session
+```php
+$session = new SessionContainer('Singly');
+if (isset($session->access_token)) {
+    return $session->access_token;
+}
+```
+
 De-authorize a service.  This will un-link a service from the user's profile.
 ```php
 $singly->deleteService('facebook');
