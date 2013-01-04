@@ -29,14 +29,6 @@ $singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
 $loginUrl = $singly->getLoginUrl('facebook');
 ```
 
-When a token is authenticated it is stored in the session
-```php
-$session = new SessionContainer('Singly');
-if (isset($session->access_token)) {
-    return $session->access_token;
-}
-```
-
 De-authorize a service.  This will un-link a service from the user's profile.
 ```php
 $singly->deleteService('facebook');
@@ -51,6 +43,14 @@ Get an access token in a redirectUri / callback handler
 ```php
 $code = $_GET['code'];
 $singly->setAccessToken($singly->getAccessToken($code));
+```
+
+When a token is authenticated it is stored in the session
+```php
+$session = new SessionContainer('Singly');
+if (isset($session->access_token)) {
+    return $session->access_token;
+}
 ```
 
 API Services
