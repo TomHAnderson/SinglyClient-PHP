@@ -184,6 +184,31 @@ class Singly
         return Json::decode($content);
     }
 
+    public function postTypes($type, $parameters = null)
+    {
+        $this->verifyAccessToken();
+
+        $http = new Client();
+        $uri = 'https://api.singly.com/v0/types/' . $type;
+        $http->setUri($uri);
+        $http->setMethod('POST');
+        $http->setOptions(array('sslverifypeer' => false));
+
+        $http->setParameterGet(array(
+            'access_token' => $this->getAccessToken()
+        ));
+
+        foreach ((array)$parameters as $key => $val) {
+            $http->setParameterPost(array(
+                $key => $val
+            ));
+        }
+
+        $response = $http->send();
+        $content = $response->getBody();
+        return Json::decode($content);
+    }
+
     public function getProxy($service, $path, $parameters = null)
     {
         $this->verifyAccessToken();

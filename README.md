@@ -56,6 +56,10 @@ $singly->getServices($service = null, $endpoint = null, $parameters = array());
 // Types
 $singly->getTypes($type = null, $parameters = null);
 
+// Post to Types
+// https://singly.com/docs/sharing
+$singly->postTypes($type, $parameters = null);
+
 // Global Items
 $singly->getById($id);
 
@@ -68,6 +72,8 @@ $singly->getByUrl($url, $parameters = null);
 // By Contact ID
 $singly->getByContact($service, $id, $parameters = null);
 ```
+
+
 A view helper object is also provided which returns the Singly service object
 ```php
 // Within a view
