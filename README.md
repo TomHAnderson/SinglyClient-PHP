@@ -12,7 +12,7 @@ Installation
 
      ```json
      "require": {
-        "singly/singly-tha": "dev-master"
+        "singly/singly": "dev-master"
      }
      ```
   2. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
@@ -23,68 +23,55 @@ Use
 ---
 Create the Singly service
 ```php
-$singly = new \Singly\Service\Singly($clientId, $clientSecret, $redirectUri);
+use \Singly\Service\Service;
+
+Singly::configure($clientId, $clientSecret, $redirectUri);
+Singly::setAccessToken('access_token');
 
 // Get a login url to authorize a service
-$loginUrl = $singly->getLoginUrl('facebook');
+$loginUrl = Singly::getLoginUrl('facebook');
 ```
 
 De-authorize a service.  This will un-link a service from the user's profile.
 ```php
-$singly->deleteService('facebook');
+Singly::deleteService('facebook');
 ```
 
 De-authorize all services.  This will delete a user's profile.
 ```php
-$singly->deleteAll();
+Singly::deleteAll();
 ```
 
 Get an access token in a redirectUri / callback handler
 ```php
 $code = $_GET['code'];
-$singly->setAccessToken($singly->getAccessToken($code));
-```
-
-When a token is authenticated it is stored in the session
-```php
-$session = new SessionContainer('Singly');
-if (isset($session->access_token)) {
-    return $session->access_token;
-}
+Singly::setAccessToken(Singly::getAccessToken($code));
 ```
 
 API Services
 ```php
 // Profiles
-$singly->getProfiles($service = null, $parameters = null);
+Singly::getProfiles($service = null, $parameters = null);
 
 // Services
-$singly->getServices($service = null, $endpoint = null, $parameters = array());
+Singly::getServices($service = null, $endpoint = null, $parameters = array());
 
 // Types
-$singly->getTypes($type = null, $parameters = null);
+Singly::getTypes($type = null, $parameters = null);
 
 // Post to Types
 // https://singly.com/docs/sharing
-$singly->postTypes($type, $parameters = null);
+Singly::postTypes($type, $parameters = null);
 
 // Global Items
-$singly->getById($id);
+Singly::getById($id);
 
 // Proxy to Service API
-$singly->getProxy($service, $path, $parameters = null)
+Singly::getProxy($service, $path, $parameters = null)
 
 // By URL
-$singly->getByUrl($url, $parameters = null);
+Singly::getByUrl($url, $parameters = null);
 
 // By Contact ID
-$singly->getByContact($service, $id, $parameters = null);
+Singly::getByContact($service, $id, $parameters = null);
 ```
-
-
-A view helper object is also provided which returns the Singly service object
-```php
-// Within a view
-$singly = $this->singly();
-```
-

@@ -1,5 +1,5 @@
 {
-    "name": "singly/singly-tha",
+    "name": "singly/singly",
     "description": "A PHP library for the Singly API",
     "type": "library",
     "license": "MIT",
@@ -9,14 +9,14 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": ">=2.0.0,<=2.0.5"
+        "zendframework/zendframework": ">=2.0.0,!=2.0.6"
     },
     "homepage": "http://singly.com",
     "authors": [
         {
-            "name": "Tom Anderson",
-            "email": "tom.h.anderson@gmail.com",
-            "homepage": "http://db.etree.org/"
+            "name": "Singly",
+            "email": "nerds@singly.com",
+            "homepage": "http://singly.com"
         }
     ],
     "autoload": {
