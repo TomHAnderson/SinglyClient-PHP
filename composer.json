@@ -1,5 +1,5 @@
 {
     "require": {
-        "singly/singly-tha": "dev-master"
+        "singly/singly": "dev-master"
     }
 }
