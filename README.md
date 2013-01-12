@@ -1,6 +1,6 @@
 Singly PHP Library
 ===============================
-This is a library to abstract the Singly API to PHP objects.  
+This library abstracts the Singly API to PHP service object.  
 
 Example 
 -------
@@ -23,7 +23,7 @@ Use
 ---
 Create the Singly service
 ```php
-use \Singly\Service\Service;
+use \Singly\Service\Singly;
 
 Singly::configure($clientId, $clientSecret, $redirectUri);
 Singly::setAccessToken('access_token');
@@ -42,10 +42,11 @@ De-authorize all services.  This will delete a user's profile.
 Singly::deleteAll();
 ```
 
-Get an access token in a redirectUri / callback handler
+Get an access token in a redirectUri / callback handler.
+Getting an access token with code sets to access token too.
 ```php
 $code = $_GET['code'];
-Singly::setAccessToken(Singly::getAccessToken($code));
+Singly::getAccessToken($code);
 ```
 
 API Services

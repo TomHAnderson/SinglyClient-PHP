@@ -6,72 +6,68 @@ use Singly\Service\Exception\InvalidArgumentException,
     Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     Zend\Http\Client,
-    Zend\Json\Json,
-    Zend\Session\Container as SessionContainer;
+    Zend\Json\Json;
 
 class Singly
 {
-    private $accessToken;
-    private $clientId;
-    private $clientSecret;
-    private $redirectUri;
+    static $accessToken;
+    static $clientId;
+    static $clientSecret;
+    static $redirectUri;
 
-    public function __construct($clientId, $clientSecret = '', $redirectUri = '')
+    static function __construct($clientId, $clientSecret = '', $redirectUri = '')
     {
         if (is_array($clientId)) extract($clientId);
-        $this->setClientId($clientId)
-            ->setClientSecret($clientSecret)
-            ->setRedirectUri($redirectUri);
+        self::setClientId($clientId);
+        self::setClientSecret($clientSecret);
+        self::setRedirectUri($redirectUri);
     }
 
-    public function getClientId()
+    static function getClientId()
     {
-        return $this->clientId;
+        return self::$clientId;
     }
 
-    public function setClientId($value)
+    static function setClientId($value)
     {
-        $this->clientId = $value;
-        return $this;
+        self::$clientId = $value;
     }
 
-    public function getClientSecret()
+    static function getClientSecret()
     {
-        return $this->clientSecret;
+        return self::$clientSecret;
     }
 
-    public function setClientSecret($value)
+    static function setClientSecret($value)
     {
-        $this->clientSecret = $value;
-        return $this;
+        self::$clientSecret = $value;
     }
 
-    public function getRedirectUri()
+    static function getRedirectUri()
     {
-        return $this->redirectUri;
+        return self::$redirectUri;
     }
 
-    public function setRedirectUri($value)
+    static function setRedirectUri($value)
     {
-        $this->redirectUri = $value;
-        return $this;
+        self::$redirectUri = $value;
     }
 
-    public function getLoginUrl($service)
+    static function getLoginUrl($service)
     {
         return 'https://api.singly.com/oauth/authorize?' .
-            'client_id=' . $this->getClientId() . '&' .
-            'redirect_uri=' . $this->getRedirectUri() . '&' .
+            'client_id=' . self::getClientId() . '&' .
+            'redirect_uri=' . self::getRedirectUri() . '&' .
             'service=' . $service;
     }
 
-    public function deleteAll() {
-        return $this->deleteService();
+    static function deleteAll() {
+        return self::deleteService();
     }
 
-    public function deleteService($service = '')
+    static function deleteService($service = '')
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -81,7 +77,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         $response = $http->send();
@@ -89,29 +85,23 @@ class Singly
         return Json::decode($content);
     }
 
-    public function setAccessToken($accessToken)
+    static function setAccessToken($accessToken)
     {
-        $this->accessToken = $accessToken;
-        return $this;
+        self::accessToken = $accessToken;
     }
 
-    public function verifyAccessToken()
+    static function verifyAccessToken()
     {
-        if (!$this->getAccessToken())
+        if (!self::getAccessToken())
             throw new InvalidArgumentException('Access token has not been set');
     }
 
-    public function getAccessToken($code = null)
+    static function getAccessToken($code = null)
     {
-        $session = new SessionContainer('Singly');
-        if (isset($session->access_token)) {
-            return $session->access_token;
-        }
+        if (!$code AND self::accessToken)
+            return self::accessToken;
 
-        if (!$code AND $this->accessToken)
-            return $this->accessToken;
-
-        if (!$code AND !$this->accessToken)
+        if (!$code AND !self::accessToken)
             return false;
 
         $http = new Client();
@@ -120,8 +110,8 @@ class Singly
 
         $http->setOptions(array('sslverifypeer' => false));
         $http->setParameterPost(array(
-            'client_id' => $this->getClientId(),
-            'client_secret' => $this->getClientSecret(),
+            'client_id' => self::getClientId(),
+            'client_secret' => self::getClientSecret(),
             'code' => $code,
         ));
 
@@ -132,15 +122,15 @@ class Singly
         }
 
         $json = Json::decode($response->getBody());
-        $this->setAccessToken($json->access_token);
+        self::setAccessToken($json->access_token);
         $session->access_token = $json->access_token;
 
-        return $this->accessToken;
+        return self::accessToken;
     }
 
-    public function getServices($service = null, $endpoint = null, $options = array())
+    static function getServices($service = null, $endpoint = null, $options = array())
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/services';
@@ -150,7 +140,7 @@ class Singly
         $http->setMethod('GET');
         $http->setOptions(array('sslverifypeer' => false));
 
-        $options['access_token'] = $this->getAccessToken();
+        $options['access_token'] = self::getAccessToken();
         $http->setParameterGet($options);
 
         $response = $http->send();
@@ -158,9 +148,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getTypes($type = null, $parameters = null)
+    static function getTypes($type = null, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/types';
@@ -170,7 +160,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
@@ -184,9 +174,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function postTypes($type, $parameters = null)
+    static function postTypes($type, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/types/' . $type;
@@ -195,7 +185,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
@@ -209,9 +199,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getProxy($service, $path, $parameters = null)
+    static function getProxy($service, $path, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/proxy';
@@ -221,7 +211,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
@@ -235,9 +225,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getProfiles($service = null, $parameters = null)
+    static function getProfiles($service = null, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -247,7 +237,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
@@ -261,9 +251,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getById($id)
+    static function getById($id)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/id';
@@ -273,7 +263,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         $response = $http->send();
@@ -281,9 +271,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getByContact($service, $id, $parameters = null)
+    static function getByContact($service, $id, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -294,7 +284,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
@@ -308,9 +298,9 @@ class Singly
         return Json::decode($content);
     }
 
-    public function getByUrl($url, $parameters = null)
+    static function getByUrl($url, $parameters = null)
     {
-        $this->verifyAccessToken();
+        self::verifyAccessToken();
 
         $http = new Client();
         $uri = 'https://api.singly.com/v0/profiles';
@@ -320,7 +310,7 @@ class Singly
         $http->setOptions(array('sslverifypeer' => false));
 
         $http->setParameterGet(array(
-            'access_token' => $this->getAccessToken()
+            'access_token' => self::getAccessToken()
         ));
 
         foreach ((array)$parameters as $key => $val) {
