@@ -2,8 +2,7 @@
 
 namespace Singly\Service;
 
-use Singly\Service\Exception\InvalidArgumentException,
-    Zend\Authentication\Adapter\AdapterInterface,
+use Zend\Authentication\Adapter\AdapterInterface,
     Zend\Authentication\Result,
     Zend\Http\Client,
     Zend\Json\Json;
@@ -15,7 +14,7 @@ class Singly
     static $clientSecret;
     static $redirectUri;
 
-    static function __construct($clientId, $clientSecret = '', $redirectUri = '')
+    static function configure($clientId, $clientSecret = '', $redirectUri = '')
     {
         if (is_array($clientId)) extract($clientId);
         self::setClientId($clientId);

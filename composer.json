@@ -14,9 +14,8 @@
     "homepage": "http://singly.com",
     "authors": [
         {
-            "name": "Singly",
-            "email": "nerds@singly.com",
-            "homepage": "http://singly.com"
+            "name": "Tom Anderson",
+            "email": "tom.h.anderson@gmail.com"
         }
     ],
     "autoload": {
