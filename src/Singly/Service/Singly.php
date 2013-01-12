@@ -86,7 +86,7 @@ class Singly
 
     static function setAccessToken($accessToken)
     {
-        self::accessToken = $accessToken;
+        self::$accessToken = $accessToken;
     }
 
     static function verifyAccessToken()
