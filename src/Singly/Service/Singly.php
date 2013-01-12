@@ -92,15 +92,15 @@ class Singly
     static function verifyAccessToken()
     {
         if (!self::getAccessToken())
-            throw new InvalidArgumentException('Access token has not been set');
+            throw new \Exception('Access token has not been set');
     }
 
     static function getAccessToken($code = null)
     {
-        if (!$code AND self::accessToken)
-            return self::accessToken;
+        if (!$code AND self::$accessToken)
+            return self::$accessToken;
 
-        if (!$code AND !self::accessToken)
+        if (!$code AND !self::$accessToken)
             return false;
 
         $http = new Client();
@@ -122,9 +122,8 @@ class Singly
 
         $json = Json::decode($response->getBody());
         self::setAccessToken($json->access_token);
-        $session->access_token = $json->access_token;
 
-        return self::accessToken;
+        return $json->access_token;
     }
 
     static function getServices($service = null, $endpoint = null, $options = array())
