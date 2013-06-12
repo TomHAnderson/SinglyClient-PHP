@@ -51,6 +51,9 @@ Singly::getAccessToken($code);
 
 API Services
 ```php
+// Simple Unified Profile
+Singly::getProfile($access_token = null);
+
 // Profiles
 Singly::getProfiles($service = null, $parameters = null);
 
