@@ -223,6 +223,25 @@ class Singly
         return Json::decode($content);
     }
 
+	static function getProfile($access_token = null)
+	{
+		self::verifyAccessToken();
+
+		$http = new Client();
+		$uri = 'https://api.singly.com/v0/profile';
+		$http->setUri($uri);
+		$http->setMethod('GET');
+		$http->setOptions(array('sslverifypeer' => false));
+
+		$http->setParameterGet(array(
+			'access_token' => ($access_token) ? $access_token : self::getAccessToken()
+		));
+
+		$response = $http->send();
+		$content = $response->getBody();
+		return Json::decode($content);
+	}
+
     static function getProfiles($service = null, $parameters = null)
     {
         self::verifyAccessToken();
