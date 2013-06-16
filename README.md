@@ -51,6 +51,10 @@ Singly::getAccessToken($code);
 
 API Services
 ```php
+// Get Login URL
+Singly::getLoginUrl($service, $options());
+// Valid options: access_token, scope, flag
+
 // Simple Unified Profile
 Singly::getProfile($access_token = null);
 
