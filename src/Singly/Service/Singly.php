@@ -52,12 +52,14 @@ class Singly
         self::$redirectUri = $value;
     }
 
-    static function getLoginUrl($service)
+    static function getLoginUrl($service, $options = array())
     {
-        return 'https://api.singly.com/oauth/authorize?' .
+        // Valid options are access_token, scope, and flag
+        $qs = (!empty($options)) ? "&" . http_build_query($options) : "";
+        return 'https://api.singly.com/oauth/authenticate?' .
             'client_id=' . self::getClientId() . '&' .
             'redirect_uri=' . self::getRedirectUri() . '&' .
-            'service=' . $service;
+            'service=' . $service . $qs;
     }
 
     static function deleteAll() {
