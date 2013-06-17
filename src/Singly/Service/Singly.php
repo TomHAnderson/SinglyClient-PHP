@@ -52,10 +52,10 @@ class Singly
         self::$redirectUri = $value;
     }
 
-    static function getLoginUrl($service, $options = array())
+    static function getLoginUrl($service, $parameters = array())
     {
         // Valid options are access_token, scope, and flag
-        $qs = (!empty($options)) ? "&" . http_build_query($options) : "";
+        $qs = (!empty($parameters)) ? "&" . http_build_query($parameters) : "";
         return 'https://api.singly.com/oauth/authenticate?' .
             'client_id=' . self::getClientId() . '&' .
             'redirect_uri=' . self::getRedirectUri() . '&' .
