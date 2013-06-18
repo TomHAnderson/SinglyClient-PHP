@@ -52,34 +52,38 @@ Singly::getAccessToken($code);
 API Services
 ```php
 // Get Login URL
-Singly::getLoginUrl($service, $options());
+Singly::getLoginUrl($service, $parameters = array());
 // Valid options: access_token, scope, flag
 
 // Simple Unified Profile
 Singly::getProfile($access_token = null);
 
 // Profiles
-Singly::getProfiles($service = null, $parameters = null);
+Singly::getProfiles($service = null, $parameters = array());
 
 // Services
 Singly::getServices($service = null, $endpoint = null, $parameters = array());
 
 // Types
-Singly::getTypes($type = null, $parameters = null);
+Singly::getTypes($type = null, $parameters = array());
 
 // Post to Types
 // https://singly.com/docs/sharing
-Singly::postTypes($type, $parameters = null);
+Singly::postTypes($type, $parameters = array());
 
 // Global Items
 Singly::getById($id);
 
 // Proxy to Service API
-Singly::getProxy($service, $path, $parameters = null)
+Singly::getProxy($service, $path, $parameters = array())
 
 // By URL
-Singly::getByUrl($url, $parameters = null);
+Singly::getByUrl($url, $parameters = array());
 
 // By Contact ID
-Singly::getByContact($service, $id, $parameters = null);
+Singly::getByContact($service, $id, $parameters = array());
+
+// Friends
+// https://singly.com/docs/friends
+Singly::getFriends($service = null, $parameters = array());
 ```
